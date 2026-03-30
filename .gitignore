@@ -9,3 +9,11 @@ runs/
 
 data/
 frontend/
+
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+runs/
+results/
+Backend/.env
