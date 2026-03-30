@@ -1,0 +1,11 @@
+# Virtual environments
+.venv/
+.venv_local/
+
+# Generated outputs
+results/
+runs/
+*.log
+
+data/
+frontend/
