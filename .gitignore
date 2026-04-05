@@ -8,7 +8,6 @@ runs/
 *.log
 
 data/
-frontend/
 
 __pycache__/
 *.pyc
