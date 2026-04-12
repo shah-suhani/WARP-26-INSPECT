@@ -8,6 +8,8 @@ runs/
 *.log
 
 data/
+api/
+26m_pro/
 
 __pycache__/
 *.pyc

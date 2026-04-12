@@ -1,4 +1,5 @@
 import os
+import yaml
 import json
 import torch
 import torch.nn as nn
@@ -6,6 +7,9 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import models, transforms
 from PIL import Image, ImageFile
+
+with open('config.yaml', 'r') as f:
+    config = yaml.safe_load(f)
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -56,8 +60,8 @@ class TransformSubset(Dataset):
         return len(self.subset)
 
 def main():
-    img_dir = '/home/warp_inspect_new/project/raw/images'
-    json_path = '/home/warp_inspect_new/project/raw/annotations.json'
+    img_dir = config['paths']['img_dir']
+    json_path = config['paths']['json_path']
 
     train_transform = transforms.Compose([
         transforms.Resize((224, 224)),

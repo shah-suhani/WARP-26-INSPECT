@@ -3,13 +3,17 @@ import json
 import shutil
 import random
 from PIL import Image, ImageFile
+import yaml
 
+with open("config.yaml","r") as f:
+    config=yaml.safe_load(f)
+    
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def main():
-    raw_img_dir = '/home/warp_inspect_new/project/raw/images'
-    json_path = '/home/warp_inspect_new/project/raw/annotations.json'
-    out_dir = '/home/warp_inspect_new/project/yolo_dataset'
+    raw_img_dir = config['paths']['img_dir']
+    json_path = config['paths']['json_path']
+    out_dir = config['paths']['yolo_dataset']
     
     for split in ['train', 'val']:
         os.makedirs(os.path.join(out_dir, 'images', split), exist_ok=True)
