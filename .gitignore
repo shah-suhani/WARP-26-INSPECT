@@ -8,6 +8,8 @@ runs/
 *.log
 
 data/
+api/
+26m_pro/
 
 models/
 
@@ -18,3 +20,7 @@ node_modules/
 runs/
 results/
 Backend/.env
+*.pth
+*.pt
+*.yaml
+*.yml
