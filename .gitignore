@@ -9,6 +9,8 @@ runs/
 
 data/
 
+models/
+
 __pycache__/
 *.pyc
 .venv/
