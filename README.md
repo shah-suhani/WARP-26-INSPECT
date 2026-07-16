@@ -138,12 +138,16 @@ Overall mask precision across all classes reaches 0.99 at a confidence threshold
 ### Pipeline in action
 
 **Undamaged vehicle** — classifier correctly identifies no damage and the pipeline exits before detection:
+<img width="1600" height="611" alt="undamaged" src="https://github.com/user-attachments/assets/1901dd81-e530-43b9-bccb-588917d0c7da" />
 
-![Undamaged classification result]
+
+[Undamaged classification result]
 
 **Damaged vehicle** — front bumper lost parts and torn material detected, segmented, and described:
+<img width="1600" height="779" alt="image" src="https://github.com/user-attachments/assets/c02c233a-2b1b-4ea6-bd3c-c905541953d5" />
 
-![Damaged classification and report]
+
+[Damaged classification and report]
 
 ## Getting Started
 
