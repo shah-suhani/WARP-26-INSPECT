@@ -1,0 +1,8 @@
+torch
+torchvision
+ultralytics
+gradio
+openai
+httpx
+pyyaml
+Pillow
