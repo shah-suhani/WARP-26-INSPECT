@@ -149,6 +149,14 @@ Overall mask precision across all classes reaches 0.99 at a confidence threshold
 
 [Damaged classification and report]
 
+## Key Highlights & Design Decisions
+
+- **Three independent stages instead of one end-to-end model.** Classification, detection, and reporting are separate, swappable components. Each can be retrained or upgraded (e.g. a newer YOLO version, or a different VLM) without touching the others.
+- **Early-exit for efficiency.** Most uploaded images are undamaged. Running detection and a VLM call on every image would waste compute and API cost, so the classifier gates the rest of the pipeline — undamaged images return instantly, damaged ones proceed to the heavier stages.
+- **VLM-generated reports instead of rule-based templates.** Rather than hand-writing severity/cost logic per damage class, Qwen3.5-VL reasons directly over the segmented image and detected classes, producing a contextual, insurance-style writeup that generalizes to damage combinations no template could anticipate.
+- **Single config, multiple concerns.** One `config.yaml` covers both inference paths and training/data-prep paths, so switching between running the app and retraining a model doesn't mean juggling separate config files.
+- **Refactored from a single script into a modular package.** The original pipeline was one file; it's now split by responsibility (`models/`, `utils/`, `api/`) so each model's training and inference code lives with the model it belongs to, and the orchestration layer stays decoupled from both.
+
 ## Getting Started
 
 ### Install
@@ -165,38 +173,11 @@ cp config.yaml.example config.yaml
 ```
 
 
-### Run the app
+### Run the file
 
 ```bash
 python main.py
 ```
-
-## Training
-
-Training scripts live alongside the model code they belong to, and are run as modules from inside `Backend/`:
-
-**1. Convert raw annotations into a YOLO segmentation dataset:**
-
-```bash
-python -m app.models.YOLO26m.data_converter
-```
-
-**2. Train the ResNet-50 classifier:**
-
-```bash
-python -m app.models.Resnet50.resnet50
-```
-
-Saves the best checkpoint (by test accuracy) to the path configured under `paths.output_model`.
-
-**3. Train the YOLOv26m detector:**
-
-```bash
-python -m app.models.YOLO26m.yolo26m
-```
-
-Resumes automatically from the last checkpoint if a run with the same name already exists, otherwise starts from the pretrained YOLOv26m-seg weights.
-
 ## Acknowledgements
 
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics)
