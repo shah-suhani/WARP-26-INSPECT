@@ -24,3 +24,8 @@ Backend/.env
 *.pt
 *.yaml
 *.yml
+# Secrets / local config
+config.yaml
+# Gradio
+gradio_cached_examples/
+flagged/

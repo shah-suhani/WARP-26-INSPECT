@@ -1,0 +1,22 @@
+# Copy to Backend/config.yaml and fill in your real values.
+
+
+paths:
+  # inference (used by damage_pipeline.py)
+  resnet: weights/resnet50_damage.pt
+  yolo: weights/yolov26_damage.pt
+
+  # training / data prep (used by resnet50.py, yolo26m.py, data_converter.py)
+  img_dir: data/raw_images
+  json_path: data/annotations.json
+  yolo_dataset: data/yolo_dataset
+  data: data/yolo_dataset/data.yaml
+  runs_segment: runs/segment
+  hyperparameters: app/models/YOLO26m/hyp.yaml
+  output_model: weights/resnet50_damage.pt
+
+models:
+  yolo26m_pt: yolo26m-seg.pt
+
+api:
+  qwen: YOUR_HUGGINGFACE_ROUTER_API_KEY
