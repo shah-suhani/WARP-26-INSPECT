@@ -9,6 +9,8 @@ RUN_NAME = "26m_pro"
 
 def load_model(config):
     yolo_path = resolve_path(config["paths"]["yolo"])
+    if not yolo_path.exists():
+        raise FileNotFoundError(f"Weights not found at: {yolo_path}")
     return YOLO(str(yolo_path))
 
 

@@ -6,3 +6,4 @@ openai
 httpx
 pyyaml
 Pillow
+python-dotenv

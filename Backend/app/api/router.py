@@ -11,7 +11,7 @@ def create_interface():
             gr.Image(type="pil", label="segmented_image"),
             gr.Textbox(label="Classification"),
             gr.Textbox(label="Detected_damage"),
-            gr.Textbox(label="damage summary", lines=8),
+            gr.Markdown(label="Damage summary", show_label=True, container=True),
         ],
         title="car damage inspector",
     )

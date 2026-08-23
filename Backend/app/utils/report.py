@@ -1,7 +1,10 @@
 import base64
+import os
 from io import BytesIO
-import httpx
+
 from openai import OpenAI
+
+from app.config import load_config
 
 SYSTEM_PROMPT = (
     "You are an expert car damage inspector working for an insurance company. "
@@ -13,13 +16,23 @@ SYSTEM_PROMPT = (
 DEFAULT_MODEL = "Qwen/Qwen3.5-397B-A17B:novita"
 
 
-def load_vlm(config):
-    
-    api_key = config["api"]["qwen"]
+def load_vlm(config=None):
+    """Build the HF-router client. HF_TOKEN wins; config.yaml is the fallback."""
+    api_key = os.getenv("HF_TOKEN")
+
+    if not api_key:
+        config = config if config is not None else load_config()
+        api_key = (config.get("api") or {}).get("qwen")
+
+    if not api_key or api_key.startswith("YOUR_"):
+        raise ValueError(
+            "No Hugging Face router key found. Set HF_TOKEN in Backend/.env "
+            "(copy .env.example), or fill api.qwen in Backend/config.yaml."
+        )
+
     return OpenAI(
         base_url="https://router.huggingface.co/v1",
         api_key=api_key,
-        http_client=httpx.Client(verify=False),
     )
 
 

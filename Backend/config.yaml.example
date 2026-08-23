@@ -19,4 +19,5 @@ models:
   yolo26m_pt: yolo26m-seg.pt
 
 api:
+  # Preferred: set HF_TOKEN in Backend/.env instead. This is only the fallback.
   qwen: YOUR_HUGGINGFACE_ROUTER_API_KEY

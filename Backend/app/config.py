@@ -1,9 +1,14 @@
 from pathlib import Path
 
 import yaml
+from dotenv import load_dotenv
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+# Backend/ — config.yaml and the relative paths inside it resolve from here.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = PROJECT_ROOT / "config.yaml"
+ENV_PATH = PROJECT_ROOT / ".env"
+
+load_dotenv(ENV_PATH, override=False)
 
 _config = None
 
@@ -17,8 +22,8 @@ def load_config(config_path=None):
     if not path.exists():
         raise FileNotFoundError(
             f"Config file not found at {path}. "
-            "Copy config.yaml.example to config.yaml (at the project root, "
-            "next to Backend/) and fill in your values."
+            "Copy config.yaml.example to config.yaml (inside Backend/, "
+            "next to main.py) and fill in your values."
         )
     with open(path, "r") as f:
         cfg = yaml.safe_load(f)

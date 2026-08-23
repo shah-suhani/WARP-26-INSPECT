@@ -22,9 +22,9 @@ test_transforms = transforms.Compose(
     ]
 )
 
-def build_model(device):
+def build_model(device, weights=None):
     """Build the ResNet-50 architecture with the custom binary head."""
-    model = models.resnet50(weights="DEFAULT")
+    model = models.resnet50(weights=weights)
     model.fc = nn.Sequential(
         nn.Dropout(0.5),
         nn.Linear(model.fc.in_features, 2),
@@ -34,8 +34,11 @@ def build_model(device):
 
 def load_model(config, device):
     """Build the architecture and load trained weights, ready for serving."""
-    model = build_model(device)
     resnet_path = resolve_path(config["paths"]["resnet"])
+    if not resnet_path.exists():
+        raise FileNotFoundError(f"Weights not found at: {resnet_path}")
+
+    model = build_model(device, weights=None)
     model.load_state_dict(torch.load(resnet_path, map_location=device))
     model.to(device).eval()
     return model
@@ -169,7 +172,7 @@ def main():
     )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = build_model(device)
+    model = build_model(device, weights="DEFAULT")
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
