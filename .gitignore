@@ -8,7 +8,6 @@ runs/
 *.log
 
 data/
-api/
 26m_pro/
 
 
@@ -22,8 +21,6 @@ results/
 Backend/.env
 *.pth
 *.pt
-*.yaml
-*.yml
 # Secrets / local config
 config.yaml
 # Gradio
